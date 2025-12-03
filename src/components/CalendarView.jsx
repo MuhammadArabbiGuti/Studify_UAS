@@ -27,7 +27,7 @@ export default function CalendarView({ onDayChange }) {
         onPress={() => setShowCalendar(!showCalendar)}
       >
         <Text style={styles.dropdownText}>
-          {selectedDay}
+          {selectedDay ? selectedDay : "Pilih Hari"}
         </Text>
         <Ionicons name={showCalendar ? "chevron-up" : "chevron-down"} size={20} />
       </TouchableOpacity>
