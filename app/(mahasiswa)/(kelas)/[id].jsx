@@ -1,9 +1,13 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
+import AnnouncementItem from "../../../src/components/AnnouncementItem";
+import MaterialItem from "../../../src/components/MaterialItem";
 import TaskItem from "../../../src/components/TaskItem";
 import { useTheme } from "../../../src/context/ThemeContext";
+import { loadAnnouncements } from "../../../src/storage/announcementStorage";
 import { loadClasses } from "../../../src/storage/classStorage";
+import { loadMaterials } from "../../../src/storage/materialStorage";
 import { loadTasks } from "../../../src/storage/taskStorage";
 
 export default function ClassDetailScreen() {
@@ -12,8 +16,19 @@ export default function ClassDetailScreen() {
 
     const [kelas, setKelas] = useState(null);
     const [tasks, setTasks] = useState(null);
+    const [materi, setMateri] = useState(null);
+    const [ann, setAnn] = useState(null);
+
     const filteredTask = Array.isArray(tasks) && kelas?.title
         ? tasks.filter(t => t.kelas?.toLowerCase() === kelas.title.toLowerCase()) 
+        : [];
+
+    const filteredMateri = Array.isArray(materi) && kelas?.title
+        ? materi.filter(m => m.kelas?.toLowerCase() === kelas.title.toLowerCase()) 
+        : [];
+
+    const filteredAnn = Array.isArray(ann) && kelas?.title
+        ? ann.filter(a => a.kelas?.toLowerCase() === kelas.title.toLowerCase()) 
         : [];
 
     const { theme, toggleTheme } = useTheme();
@@ -47,6 +62,28 @@ export default function ClassDetailScreen() {
     })();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+        try {
+            const data = await loadMaterials();
+            setMateri(data);
+        } catch (e) {
+            console.error("Error loadMaterials:", e);
+        }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+        try {
+            const data = await loadAnnouncements();
+            setAnn(data);
+        } catch (e) {
+            console.error("Error loadAnnouncements:", e);
+        }
+    })();
+  }, []);
+
   if (!kelas) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center",color: text }}>
@@ -75,6 +112,32 @@ export default function ClassDetailScreen() {
             ) : (
                 <Text style={[styles.title, {color: text}]}>
                     Belum ada tugas untuk kelas ini
+                </Text>
+            )}
+        </View>
+
+        <View>
+            <Text style={[styles.title, {color: text}]}>Materi</Text>
+            {filteredMateri.length > 0 ? (
+                filteredMateri.map(item => (
+                    <MaterialItem key={item.id} material={item} />
+                ))
+            ) : (
+                <Text style={[styles.subtitle, {color: text}]}>
+                    Belum ada materi untuk kelas ini
+                </Text>
+            )}
+        </View>
+
+        <View>
+            <Text style={[styles.title, {color: text}]}>Pemberitahuan</Text>
+            {filteredAnn.length > 0 ? (
+                filteredAnn.map(item => (
+                    <AnnouncementItem key={item.id} announcement={item} />
+                ))
+            ) : (
+                <Text style={[styles.subtitle, {color: text}]}>
+                    Belum ada pemberitahuan untuk kelas ini
                 </Text>
             )}
         </View>
