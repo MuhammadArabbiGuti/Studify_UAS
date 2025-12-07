@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function AdminHomeScreen() {
@@ -8,24 +9,23 @@ export default function AdminHomeScreen() {
       <Text style={styles.greeting}>Selamat Datang, Admin!</Text>
 
       <View style={styles.grid}>
-        <MenuCard title="Tambah Mahasiswa" />
-        <MenuCard title="Tambah Dosen" />
-        <MenuCard title="Tambah Kelas" />
+        <TouchableOpacity style={styles.card} onPress={() => router.push("/(admin)/AddMahasiswa")}>
+          <Ionicons name="add-outline" size={32} color="#0B173B" />
+          <Text style={styles.cardText}>Lihat daftar / tambah Mahasiswa</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.card} onPress={() => router.push("/(admin)/AddDosen")}>
+          <Ionicons name="add-outline" size={32} color="#0B173B" />
+          <Text style={styles.cardText}>Lihat daftar / tambah Dosen</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.card} onPress={() => router.push("/(admin)/AddClass")}>
+          <Ionicons name="add-outline" size={32} color="#0B173B" />
+          <Text style={styles.cardText}>Lihat daftar / tambah Kelas</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
-function MenuCard({ title, onPress }) {
-  return (
-    <TouchableOpacity style={styles.card} onPress={onPress}>
-      <Ionicons name="add-outline" size={32} color="#0B173B" />
-      <Text style={styles.cardText}>{title}</Text>
-    </TouchableOpacity>
-  );
-}
-
-/* Style */
 const styles = StyleSheet.create({
   container: {
     flex: 1,

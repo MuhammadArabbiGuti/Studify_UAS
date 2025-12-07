@@ -19,7 +19,7 @@ export default function ClassScreen() {
         <ScrollView 
             contentContainerStyle={{paddingBottom: 20}} style={[styles.container, {backgroundColor: bg}]}>
             <View style={styles.classes}>
-                <Text style={[styles.sectionTitle, {color: text}]}>Kelas yang diambil</Text>
+                <Text style={[styles.sectionTitle, {color: text}]}>Kelas yang diampu</Text>
                 {classes.map(item => (<ClassItem key={item.id} kelas={item} />
                 ))}
             </View>

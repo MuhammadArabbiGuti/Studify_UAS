@@ -35,7 +35,7 @@ export default function TaskItem({ task }) {
 
     const info = deadlineInfo(task.deadline);
 
-    const siswaKelas = dummyClasses.find(s => s.title === task.kelas)?.total ?? 0;
+    const siswaKelas = dummyClasses.find(s => s.title === task.kelas)?.siswa ?? 0;
 
     return (
         <View style={[styles.card, {backgroundColor: card, borderColor: border, borderWidth: 1}]}>

@@ -50,6 +50,7 @@ export default function HomeScreen() {
           <TaskItem key={item.id} task={item} />
         ))}
 
+        <Text style={[styles.sectionTitle, {color: text}]}>Kalender</Text>
         <CalendarView onDayChange={setSelectedDay} />
         {scheduledClasses.map(item => (
             <ClassItem key={item.id} kelas={item} />

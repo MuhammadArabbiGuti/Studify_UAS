@@ -16,11 +16,11 @@ export default function ClassItem({ kelas }) {
             <Text style={[styles.title, {color: text}]}>{kelas.title}</Text>
             <View style={styles.row}>
                 <Ionicons name="person" size={14} color={text} />
-                <Text style={[styles.subtitle, {color: text}]}>{kelas.teacher}</Text>
+                <Text style={[styles.subtitle, {color: text}]}>{kelas.dosen}</Text>
             </View>
             <View style={styles.row}>
                 <Ionicons name="time" size={14} color={text} />
-                <Text style={[styles.subtitle, {color: text}]}>{kelas.hari} {kelas.jam}</Text>
+                <Text style={[styles.subtitle, {color: text}]}>{kelas.day} {kelas.time}</Text>
             </View>
 
         <Text style={[styles.progressText, {color: text}]}>Pertemuan: {Math.round(kelas.session)} / {kelas.total} Sesi</Text>
