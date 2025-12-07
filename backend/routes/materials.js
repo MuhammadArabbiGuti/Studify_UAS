@@ -1,0 +1,12 @@
+const express = require('express');
+const router = express.Router();
+const materialController = require('../controllers/materialController');
+
+router.get('/', materialController.getAllMaterials);
+router.get('/:id', materialController.getMaterialById);
+router.get('/class/:classId', materialController.getMaterialsByClass);
+router.post('/', materialController.createMaterial);
+router.put('/:id', materialController.updateMaterial);
+router.delete('/:id', materialController.deleteMaterial);
+
+module.exports = router;
