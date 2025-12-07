@@ -41,11 +41,11 @@ function TabsNavigation() {
         ),
       }}
     >
-      <Tabs.Screen name="index" options={{ title: "Home" }} />
-      <Tabs.Screen name="kelas" options={{ title: "Kelas" }} />
-      <Tabs.Screen name="notif" options={{ title: "Notifikasi" }} />
-      <Tabs.Screen name="profil" options={{ title: "Profil" }} />
-      <Tabs.Screen name="(kelas)/[id]" options={{ href: null }} />
+      <Tabs.Screen name="index" options={{ title: "Home", headerShown: true, headerTitle: "" }} />
+      <Tabs.Screen name="kelas" options={{ title: "Kelas", headerShown: true, headerTitle: "" }} />
+      <Tabs.Screen name="notif" options={{ title: "Notifikasi", headerShown: true, headerTitle: "" }} />
+      <Tabs.Screen name="profil" options={{ title: "Profil", headerShown: true, headerTitle: "" }} />
+      <Tabs.Screen name="(kelas)/[id]" options={{ href: null, headerShown: true, headerTitle: "" }} />
     </Tabs>
   );
 }

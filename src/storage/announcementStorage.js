@@ -1,12 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const STORAGE_KEY = 'STUDIFY_TASKS';
+const STORAGE_KEY = 'STUDIFY_ANNOUNCEMENTS';
 
-export async function saveTask(newTask) {
+export async function saveAnnouncement(newAnnouncement) {
     try {
         const stored = await AsyncStorage.getItem(STORAGE_KEY);
         const list = stored ? JSON.parse(stored) : [];
-        const updated = Array.isArray(list) ? [...list, newTask] : [newTask];
+        const updated = Array.isArray(list) ? [...list, newAnnouncement] : [newAnnouncement];
         await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
         return updated;
     } catch (e) {
@@ -15,17 +15,17 @@ export async function saveTask(newTask) {
     }
 }
 
-export async function loadTasks() {
+export async function loadAnnouncements() {
     try {
         const json = await AsyncStorage.getItem(STORAGE_KEY);
         return json ? JSON.parse(json) : [];
     } catch (e) {
-        console.error("Gagal load task", e);
+        console.error("Gagal load Pemberitahuan", e);
         return [];
     }
 }
 
-export async function getTaskById(id) {
-    const tasks = await loadTasks();
-    return tasks.find(t => t.id === id) || null;
+export async function getAnnouncementById(id) {
+    const Announcements = await loadAnnouncements();
+    return Announcements.find(t => t.id === id) || null;
 }

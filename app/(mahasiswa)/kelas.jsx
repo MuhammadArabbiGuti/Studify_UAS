@@ -19,8 +19,6 @@ export default function ClassScreen() {
         (async () => {
             try {
                 const data = await loadClasses();
-                console.log("loadClasses result:", data);
-                console.log("type:", typeof data, "isArray:", Array.isArray(data));
                 setClassList(data);
             } catch (e) {
                 console.error("Error loadClasses:", e);

@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 import { useTheme } from "../../src/context/ThemeContext";
 
 export default function ProfilScreen() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setLight, setDark } = useTheme();
   const isDark = theme === "dark";
 
   const bg = isDark ? "#0D0D0D" : "#FFFFFF";
@@ -32,14 +32,14 @@ export default function ProfilScreen() {
           <Text style={[styles.modeLabel, {color: text}]}>Mode</Text>
 
             <View style={[styles.modeToggle, { borderColor: border }]}>
-            <TouchableOpacity onPress={toggleTheme} style={styles.iconLeft}>
+            <TouchableOpacity onPress={setLight} style={styles.iconLeft}>
               <Ionicons
                 name="sunny"
                 size={20}
                 color={isDark ? "#fff" : "#999"}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={toggleTheme} style={styles.iconRight}>
+            <TouchableOpacity onPress={setDark} style={styles.iconRight}>
               <Ionicons
                 name="moon"
                 size={20}

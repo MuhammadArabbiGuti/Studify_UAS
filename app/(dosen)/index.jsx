@@ -5,12 +5,12 @@ import CalendarView from '../../src/components/CalendarView';
 import ClassItem from '../../src/components/ClassItem';
 import TaskItem from '../../src/components/TaskItem';
 import { useTheme } from "../../src/context/ThemeContext";
-import { dummyTasks } from '../../src/data/dummyTasks';
 import { loadClasses } from '../../src/storage/classStorage';
+import { loadTasks } from '../../src/storage/taskStorage';
 
 export default function HomeScreen() {
     const [classes, setClassList] = useState([]);
-    const [tasks, setTasks] = useState(dummyTasks);
+    const [tasks, setTaskList] = useState([]);
 
     useEffect(() => {
         (async () => {
@@ -19,6 +19,17 @@ export default function HomeScreen() {
                 setClassList(data);
             } catch (e) {
                 console.error("Error loadClasses:", e);
+            }
+        })();
+    }, []);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const data = await loadTasks();
+                setTaskList(data);
+            } catch (e) {
+                console.error("Error loadTasks:", e);
             }
         })();
     }, []);

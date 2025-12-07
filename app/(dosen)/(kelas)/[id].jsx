@@ -1,20 +1,28 @@
+import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import MaterialItem from "../../../src/components/MaterialItem";
 import TaskItem from "../../../src/components/TaskItem";
 import { useRole } from "../../../src/context/RoleContext";
 import { useTheme } from "../../../src/context/ThemeContext";
-import { dummyTasks } from "../../../src/data/dummyTasks";
 import { loadClasses } from "../../../src/storage/classStorage";
+import { loadMaterials } from "../../../src/storage/materialStorage";
+import { loadTasks } from "../../../src/storage/taskStorage";
 
 export default function ClassDetailScreen() {
     const { id } = useLocalSearchParams();
     const router = useRouter();
 
     const [kelas, setKelas] = useState(null);
-    const [tasks, setTasks] = useState(dummyTasks);
+    const [tasks, setTasks] = useState(null);
+    const [materi, setMateri] = useState(null);
     const filteredTask = Array.isArray(tasks) && kelas?.title
         ? tasks.filter(t => t.kelas?.toLowerCase() === kelas.title.toLowerCase()) 
+        : [];
+
+    const filteredMateri = Array.isArray(materi) && kelas?.title
+        ? materi.filter(m => m.kelas?.toLowerCase() === kelas.title.toLowerCase()) 
         : [];
 
     const { theme, toggleTheme } = useTheme();
@@ -38,6 +46,28 @@ export default function ClassDetailScreen() {
       }
     });
   }, [id]);
+
+  useEffect(() => {
+    (async () => {
+        try {
+            const data = await loadTasks();
+            setTasks(data);
+        } catch (e) {
+            console.error("Error loadTasks:", e);
+        }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+        try {
+            const data = await loadMaterials();
+            setMateri(data);
+        } catch (e) {
+            console.error("Error loadMaterials:", e);
+        }
+    })();
+  }, []);
 
   if (!kelas) {
     return (
@@ -65,11 +95,57 @@ export default function ClassDetailScreen() {
                     <TaskItem key={item.id} task={item} />
                 ))
             ) : (
-                <Text style={[styles.title, {color: text}]}>
+                <Text style={[styles.subtitle, {color: text}]}>
                     Belum ada tugas untuk kelas ini
                 </Text>
             )}
         </View>
+
+        <View>
+            <Text style={[styles.title, {color: text}]}>Materi</Text>
+            {filteredMateri.length > 0 ? (
+                filteredMateri.map(item => (
+                    <MaterialItem key={item.id} task={item} />
+                ))
+            ) : (
+                <Text style={[styles.subtitle, {color: text}]}>
+                    Belum ada materi untuk kelas ini
+                </Text>
+            )}
+        </View>
+
+        <TouchableOpacity onPress={() => router.push({pathname: "/(dosen)/AddTask", params: { kelas: kelas.title }})} style={{ marginTop: 18 }}>
+          <LinearGradient
+            colors={["#3252F4", "#23B3FA"]}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+            style={styles.submitBtn}
+          >
+            <Text style={styles.submitText}>Tambahkan Tugas</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => router.push({pathname: "/(dosen)/AddMateri", params: { kelas: kelas.title }})} style={{ marginTop: 18 }}>
+          <LinearGradient
+            colors={["#3252F4", "#23B3FA"]}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+            style={styles.submitBtn}
+          >
+            <Text style={styles.submitText}>Tambahkan Materi</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => router.push({pathname: "/(dosen)/AddAnnounce", params: { kelas: kelas.title }})} style={{ marginTop: 18 }}>
+          <LinearGradient
+            colors={["#3252F4", "#23B3FA"]}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+            style={styles.submitBtn}
+          >
+            <Text style={styles.submitText}>Tambahkan Pemberitahuan</Text>
+          </LinearGradient>
+        </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -114,6 +190,16 @@ const styles = StyleSheet.create({
       padding: 12,
       borderRadius: 10,
       marginTop: 14,
-    }
+    },
+    submitBtn: {
+      borderRadius: 12,
+      paddingVertical: 14,
+    },
+    submitText: {
+      textAlign: "center",
+      color: "#fff",
+      fontSize: 16,
+      fontWeight: "700",
+    },
   });
   

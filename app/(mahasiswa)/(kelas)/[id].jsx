@@ -3,15 +3,15 @@ import { useEffect, useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import TaskItem from "../../../src/components/TaskItem";
 import { useTheme } from "../../../src/context/ThemeContext";
-import { dummyTasks } from "../../../src/data/dummyTasks";
 import { loadClasses } from "../../../src/storage/classStorage";
+import { loadTasks } from "../../../src/storage/taskStorage";
 
 export default function ClassDetailScreen() {
     const { id } = useLocalSearchParams();
     const router = useRouter();
 
     const [kelas, setKelas] = useState(null);
-    const [tasks, setTasks] = useState(dummyTasks);
+    const [tasks, setTasks] = useState(null);
     const filteredTask = Array.isArray(tasks) && kelas?.title
         ? tasks.filter(t => t.kelas?.toLowerCase() === kelas.title.toLowerCase()) 
         : [];
@@ -35,6 +35,17 @@ export default function ClassDetailScreen() {
       }
     });
   }, [id]);
+
+  useEffect(() => {
+    (async () => {
+        try {
+            const data = await loadTasks();
+            setTasks(data);
+        } catch (e) {
+            console.error("Error loadTasks:", e);
+        }
+    })();
+  }, []);
 
   if (!kelas) {
     return (

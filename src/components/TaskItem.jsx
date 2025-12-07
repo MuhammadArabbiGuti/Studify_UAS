@@ -59,7 +59,7 @@ export default function TaskItem({ task }) {
             <View style={styles.info}>
                 <Text style={[styles.title, {color: text}]}>{task.title}</Text>
                 <Text style={[styles.subtitle, {color: text}]}>{task.kelas}</Text>
-                <Text style={[styles.subtitle, {color: text}]}>Pertemuan: {task.sesi}</Text>
+                <Text style={[styles.subtitle, {color: text}]}>Pertemuan: {task.session}</Text>
                 
                 {role === "mahasiswa" && info && task.deadline && (
                     <Text style={[styles.subtitle, info.status === 'future' ?

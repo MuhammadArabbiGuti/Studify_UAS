@@ -1,21 +1,21 @@
 import { createContext, useContext, useState } from "react";
-import { useColorScheme } from "react-native";
 
 const ThemeContext = createContext();
+export const useTheme = () => useContext(ThemeContext);
 
-export const ThemeProvider = ({ children }) => {
-  const systemScheme = useColorScheme();
-  const [theme, setTheme] = useState(systemScheme || "light");
+export function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState("light");
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    setTheme(prev => prev === "light" ? "dark" : "light");
   };
 
+  const setLight = () => setTheme("light");
+  const setDark = () => setTheme("dark");
+
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, setLight, setDark }}>
       {children}
     </ThemeContext.Provider>
   );
 };
-
-export const useTheme = () => useContext(ThemeContext);

@@ -1,12 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const STORAGE_KEY = 'STUDIFY_TASKS';
+const STORAGE_KEY = 'STUDIFY_MATERIALS';
 
-export async function saveTask(newTask) {
+export async function saveMaterial(newMaterial) {
     try {
         const stored = await AsyncStorage.getItem(STORAGE_KEY);
         const list = stored ? JSON.parse(stored) : [];
-        const updated = Array.isArray(list) ? [...list, newTask] : [newTask];
+        const updated = Array.isArray(list) ? [...list, newMaterial] : [newMaterial];
         await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
         return updated;
     } catch (e) {
@@ -15,17 +15,17 @@ export async function saveTask(newTask) {
     }
 }
 
-export async function loadTasks() {
+export async function loadMaterials() {
     try {
         const json = await AsyncStorage.getItem(STORAGE_KEY);
         return json ? JSON.parse(json) : [];
     } catch (e) {
-        console.error("Gagal load task", e);
+        console.error("Gagal load Materi", e);
         return [];
     }
 }
 
-export async function getTaskById(id) {
-    const tasks = await loadTasks();
-    return tasks.find(t => t.id === id) || null;
+export async function getMaterialById(id) {
+    const Materials = await loadMaterials();
+    return Materials.find(t => t.id === id) || null;
 }

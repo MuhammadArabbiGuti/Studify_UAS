@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import ClassItem from '../../src/components/ClassItem';
 import { useTheme } from "../../src/context/ThemeContext";
-import { dummyClasses } from '../../src/data/dummyClasses';
+import { loadClasses } from '../../src/storage/classStorage';
 
 export default function ClassScreen() {
-    const [classes, setClasses] = useState(dummyClasses);
+    const [classList, setClassList] = useState([]);
 
     const { theme, toggleTheme } = useTheme();
     const isDark = theme === "dark";
@@ -15,12 +15,23 @@ export default function ClassScreen() {
     const border = isDark ? "#fff" : "#999";
     const card = isDark ? "#1A1A1A" : "#F4F4F4";
 
+    useEffect(() => {
+        (async () => {
+            try {
+                const data = await loadClasses();
+                setClassList(data);
+            } catch (e) {
+                console.error("Error loadClasses:", e);
+            }
+        })();
+    }, []);
+
     return(
         <ScrollView 
             contentContainerStyle={{paddingBottom: 20}} style={[styles.container, {backgroundColor: bg}]}>
             <View style={styles.classes}>
                 <Text style={[styles.sectionTitle, {color: text}]}>Kelas yang diampu</Text>
-                {classes.map(item => (<ClassItem key={item.id} kelas={item} />
+                {classList.map(item => (<ClassItem key={item.id} kelas={item} />
                 ))}
             </View>
         </ScrollView>
