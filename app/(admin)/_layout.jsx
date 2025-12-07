@@ -34,6 +34,9 @@ export default function AdminLayout() {
         <Tabs.Screen name="AddClass" options={{href: null, headerShown: true, headerTitle: "" }} />
         <Tabs.Screen name="AddDosen" options={{href: null, headerShown: true, headerTitle: "" }} />
         <Tabs.Screen name="AddMahasiswa" options={{href: null, headerShown: true, headerTitle: "" }} />
+
+        <Tabs.Screen name="(kelas)/kelas" options={{href: null, headerShown: true, headerTitle: "" }} />
+        <Tabs.Screen name="(kelas)/[id]" options={{href: null, headerShown: true, headerTitle: "" }} />
     </Tabs>
   );
 }

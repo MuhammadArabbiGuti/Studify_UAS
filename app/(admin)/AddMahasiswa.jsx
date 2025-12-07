@@ -7,6 +7,7 @@ import { loadSiswa, saveSiswa } from "../../src/storage/siswaStorage";
 export default function AddSiswa() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [kelas, setKelas] = useState("");
 
     const [siswaList, setSiswaList] = useState([]);
 
@@ -17,7 +18,7 @@ export default function AddSiswa() {
     const handleAddSiswa = async () => {
         if(!name || !email) return Alert.alert("Error", "Lengkapi data");
 
-        const newItem = { id: Date.now(), name, email };
+        const newItem = { id: Date.now().toString(), name, email, kelas };
 
         const updated = await saveSiswa(newItem);
 
@@ -27,6 +28,7 @@ export default function AddSiswa() {
 
         setName("");
         setEmail("");
+        setKelas("");
     };
 
     return (
@@ -39,6 +41,7 @@ export default function AddSiswa() {
             <Text style={styles.headerSubtitle}>Isi semua formulir dibawah ini!</Text>
           <TextInput style={styles.input} placeholder="Nama" value={name} onChangeText={setName} />
           <TextInput style={styles.input} placeholder="Email" value={email} onChangeText={setEmail} />
+          <TextInput style={styles.input} placeholder="Kelas" value={kelas} onChangeText={setKelas} />
     
                 <TouchableOpacity onPress={handleAddSiswa} style={{ marginTop: 18 }}>
                     <LinearGradient

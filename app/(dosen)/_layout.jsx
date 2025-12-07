@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Tabs, useRouter } from 'expo-router';
 import { Pressable, Text } from 'react-native';
 import { ThemeProvider, useTheme } from '../../src/context/ThemeContext';
@@ -41,10 +42,18 @@ function TabsNavigation() {
         ),
       }}
     >
-      <Tabs.Screen name="index" options={{ title: "Home", headerShown: true, headerTitle: "" }} />
-      <Tabs.Screen name="kelas" options={{ title: "Kelas", headerShown: true, headerTitle: "" }} />
-      <Tabs.Screen name="notif" options={{ title: "Notifikasi", headerShown: true, headerTitle: "" }} />
-      <Tabs.Screen name="profil" options={{ title: "Profil", headerShown: true, headerTitle: "" }} />
+      <Tabs.Screen name="index" options={{ title: "Home",
+        tabBarIcon: () => <Ionicons name="home" size={20} color={text}/>, headerShown: true, headerTitle: "" }} />
+
+      <Tabs.Screen name="kelas" options={{ title: "Kelas",
+        tabBarIcon: () => <Ionicons name="book" size={20} color={text}/>, headerShown: true, headerTitle: "" }} />
+
+      <Tabs.Screen name="notif" options={{ title: "Notifikasi",
+        tabBarIcon: () => <Ionicons name="alert-circle" size={20} color={text}/>, headerShown: true, headerTitle: "" }} />
+
+      <Tabs.Screen name="profil" options={{ title: "Profil",
+        tabBarIcon: () => <Ionicons name="id-card" size={20} color={text}/>, headerShown: true, headerTitle: "" }} />
+
       <Tabs.Screen name="(kelas)/[id]" options={{ href: null, headerShown: true, headerTitle: "" }} />
       <Tabs.Screen name="AddTask" options={{ href: null, headerShown: true, headerTitle: "" }} />
       <Tabs.Screen name="AddMateri" options={{ href: null, headerShown: true, headerTitle: "" }} />

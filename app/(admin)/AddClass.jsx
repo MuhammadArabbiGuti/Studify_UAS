@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from 'react';
-import { Alert, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import 'react-native-get-random-values';
 import { loadClasses, saveClass } from '../../src/storage/classStorage';
 
@@ -121,16 +121,6 @@ export default function AddClass() {
                     </LinearGradient>
                 </TouchableOpacity>
 
-                <Text style={{ marginTop: 20, fontWeight: "bold" }}>Daftar Kelas</Text>
-                <FlatList
-                  data={classList}
-                  keyExtractor={item => item.id.toString()}
-                  renderItem={({ item }) => (
-                  <Text>
-                    {item.title} | {item.day} | {item.time}
-                  </Text>
-                  )}
-                />
             </View>
         </ScrollView>
     );
