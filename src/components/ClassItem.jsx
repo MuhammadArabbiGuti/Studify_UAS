@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useTheme } from "../../src/context/ThemeContext";
+import { useRole } from "../context/RoleContext";
 
 export default function ClassItem({ kelas }) {
     const { theme, toggleTheme } = useTheme();
@@ -14,6 +15,8 @@ export default function ClassItem({ kelas }) {
     const card = isDark ? "#1A1A1A" : "#F4F4F4";
 
     const router = useRouter();
+
+    const { role } = useRole();
 
     return (
         <View style={[styles.card, {backgroundColor: card, borderColor: border, borderWidth: 1}]}>
@@ -30,7 +33,7 @@ export default function ClassItem({ kelas }) {
               </View>
             </View>
 
-            <TouchableOpacity onPress={() => router.push(`(kelas)/${kelas.id}`)}>
+            <TouchableOpacity onPress={() => router.push(`(${role})/(kelas)/${kelas.id}`)}>
               <LinearGradient
                 colors={["#3252F4", "#23B3FA"]} 
                 style={styles.iconBox}

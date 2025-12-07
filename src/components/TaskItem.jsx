@@ -3,6 +3,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from "../../src/context/ThemeContext";
+import { useRole } from "../context/RoleContext";
 import { loadClasses } from "../storage/classStorage";
 
 function deadlineInfo(deadline) {
@@ -31,6 +32,8 @@ export default function TaskItem({ task }) {
     const isDark = theme === "dark";
     const [siswaTotal, setSiswaTotal] = useState(null);
 
+    const { role } = useRole();
+
     const text = isDark ? "#FFFFFF" : "#1A1A1A";
     const border = isDark ? "#fff" : "#999";
     const card = isDark ? "#1A1A1A" : "#F4F4F4";
@@ -58,10 +61,16 @@ export default function TaskItem({ task }) {
                 <Text style={[styles.subtitle, {color: text}]}>{task.kelas}</Text>
                 <Text style={[styles.subtitle, {color: text}]}>Pertemuan: {task.sesi}</Text>
                 
-                {!!task.deadline && (
+                {role === "mahasiswa" && info && task.deadline && (
                     <Text style={[styles.subtitle, info.status === 'future' ?
                         {color: text} : {color:'red'}]}>
                             {info.text}
+                    </Text>
+                )}
+
+                {role === "dosen" && info && task.deadline && (
+                    <Text style={[styles.subtitle, {color: text}]}>
+                        Batas Waktu: {task.deadline}
                     </Text>
                 )}
 
