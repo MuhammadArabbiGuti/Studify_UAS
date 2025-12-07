@@ -9,7 +9,7 @@ export default function AddClass() {
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
     const [dosen, setDosen] = useState("");
-    const [siswa, setSiswa] = useState("");
+    const [siswa, setSiswa] = useState([]);
     const [session, setSession] = useState("");
     const [day, setDay] = useState("");
     const [time, setTime] = useState("");
@@ -34,6 +34,8 @@ export default function AddClass() {
             session: Number(session),
             day,
             time,
+            current: 0,
+            siswaTotal: siswa.split(",").map(m => m.trim()).filter(m => m !== "").length,
         };
 
         const updated = await saveClass(newClass);
@@ -44,7 +46,7 @@ export default function AddClass() {
         setTitle("");
         setDesc("");
         setDosen("");
-        setSiswa("");
+        setSiswa([]);
         setSession("");
         setDay("");
         setTime("");

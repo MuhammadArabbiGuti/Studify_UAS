@@ -31,12 +31,21 @@ function TabsNavigation() {
             </Text>
           </Pressable>
         ),
+
+        headerLeft: () => (
+          <Pressable onPress={() => router.push('/')} style={{ marginLeft: 15 }}>
+            <Text style={{ fontSize: 16, color: text, fontWeight: "600" }}>
+              Kembali
+            </Text>
+          </Pressable>
+        ),
       }}
     >
       <Tabs.Screen name="index" options={{ title: "Home" }} />
       <Tabs.Screen name="kelas" options={{ title: "Kelas" }} />
       <Tabs.Screen name="notif" options={{ title: "Notifikasi" }} />
       <Tabs.Screen name="profil" options={{ title: "Profil" }} />
+      <Tabs.Screen name="(kelas)/[id]" options={{ href: null }} />
     </Tabs>
   );
 }

@@ -1,26 +1,37 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import CalendarView from '../../src/components/CalendarView';
 import ClassItem from '../../src/components/ClassItem';
 import TaskItem from '../../src/components/TaskItem';
 import { useTheme } from "../../src/context/ThemeContext";
-import { dummyClasses } from '../../src/data/dummyClasses';
 import { dummyTasks } from '../../src/data/dummyTasks';
+import { loadClasses } from '../../src/storage/classStorage';
 
 export default function HomeScreen() {
-    const [classes, setClasses] = useState(dummyClasses);
+    const [classes, setClassList] = useState([]);
     const [tasks, setTasks] = useState(dummyTasks);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const data = await loadClasses();
+                setClassList(data);
+            } catch (e) {
+                console.error("Error loadClasses:", e);
+            }
+        })();
+    }, []);
 
     const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
     const today = days[new Date().getDay()];
 
-    const classesToday = dummyClasses.filter(c => c.hari === today);
+    const classesToday = classes.filter(c => c.day === today);
 
     const [selectedDay, setSelectedDay] = useState(null);
 
     const scheduledClasses = selectedDay
-    ? classes.filter(c => c.hari === selectedDay)
+    ? classes.filter(c => c.day === selectedDay)
     : [];
 
     const { theme, toggleTheme } = useTheme();
@@ -40,7 +51,7 @@ export default function HomeScreen() {
         <Ionicons name="qr-code-outline" size={28} />
         </View>
         
-        <Text style={[styles.sectionTitle, {color: text}]}>Kelas hari ini</Text>
+        <Text style={[styles.sectionTitle, {color: text}]}>Kelas hari ini:</Text>
         {classesToday.map(item => (
           <ClassItem key={item.id} kelas={item} />
         ))}

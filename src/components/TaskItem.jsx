@@ -1,8 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from "../../src/context/ThemeContext";
-import { dummyClasses } from "../data/dummyClasses";
+import { loadClasses } from "../storage/classStorage";
 
 function deadlineInfo(deadline) {
     if(!deadline) return { status: 'none', text: '' };
@@ -28,6 +29,7 @@ export default function TaskItem({ task }) {
 
     const { theme, toggleTheme } = useTheme();
     const isDark = theme === "dark";
+    const [siswaTotal, setSiswaTotal] = useState(null);
 
     const text = isDark ? "#FFFFFF" : "#1A1A1A";
     const border = isDark ? "#fff" : "#999";
@@ -35,13 +37,26 @@ export default function TaskItem({ task }) {
 
     const info = deadlineInfo(task.deadline);
 
-    const siswaKelas = dummyClasses.find(s => s.title === task.kelas)?.siswa ?? 0;
+    useEffect(() => {
+        loadClasses().then(data => {
+            const siswaKelas = data.find(k =>
+                k.title.toLowerCase() === task.kelas.toLowerCase()
+            );
+
+            if (siswaKelas && Array.isArray(siswaKelas.siswa)) {
+                setSiswaTotal(siswaKelas.siswa.length);
+            } else {
+                setSiswaTotal(0);
+            }
+        });
+    }, []);
 
     return (
         <View style={[styles.card, {backgroundColor: card, borderColor: border, borderWidth: 1}]}>
             <View style={styles.info}>
                 <Text style={[styles.title, {color: text}]}>{task.title}</Text>
                 <Text style={[styles.subtitle, {color: text}]}>{task.kelas}</Text>
+                <Text style={[styles.subtitle, {color: text}]}>Pertemuan: {task.sesi}</Text>
                 
                 {!!task.deadline && (
                     <Text style={[styles.subtitle, info.status === 'future' ?
@@ -50,7 +65,7 @@ export default function TaskItem({ task }) {
                     </Text>
                 )}
 
-                <Text style={[styles.subtitle, {color: text}]}>Sudah dikumpulkan oleh {task.submit} / {siswaKelas} mahasiswa </Text>
+                <Text style={[styles.subtitle, {color: text}]}>Sudah dikumpulkan oleh {task.submit} / {siswaTotal} mahasiswa </Text>
 
             </View>
 
@@ -78,19 +93,19 @@ const styles = StyleSheet.create({
         marginTop: 12,
         elevation: 3,
         shadowColor: "#000",
-        shadowOpacity: 0.06,
-        shadowRadius: 5,
+        shadowOpacity: 0.08,
+        shadowRadius: 7,
     },
     iconBox: {
         backgroundColor: "#1e8df1",
-        width: 70,
-        height: 70,
+        width: 50,
+        height: 50,
         borderRadius: 18,      
         justifyContent: "center",
         alignItems: "center",
         marginRight: 0
     },
-    info: { flex: 1, marginLeft: 14, flexDirection: "column", alignItems: "left" },
+    info: { flex: 1, flexDirection: "column", alignItems: "left" },
     title: { fontSize: 16, fontWeight: "600", color: "black" },
     subtitle: { fontSize: 13, color: "#666", marginTop: 5 },
 });

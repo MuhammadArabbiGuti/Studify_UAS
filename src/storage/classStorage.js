@@ -24,3 +24,8 @@ export async function loadClasses() {
         return [];
     }
 }
+
+export async function getClassById(id) {
+    const classes = await loadClasses();
+    return classes.find(c => c.id === id) || null;
+}
