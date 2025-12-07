@@ -54,14 +54,14 @@ export default function AddAnnouncement() {
 
                 <TextInput
                     style={styles.input}
-                    placeholder="Judul pemberitahuan"
+                    placeholder="Judul Pemberitahuan"
                     value={title}
                     onChangeText={setTitle}
                 />
 
                 <TextInput
                     style={styles.input}
-                    placeholder="Deskripsi"
+                    placeholder="Isi"
                     value={desc}
                     onChangeText={setDesc}
                 />
