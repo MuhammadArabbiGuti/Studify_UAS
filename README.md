@@ -63,7 +63,7 @@ npx expo start
 Jika testing di physical device, edit file `src/config/api.js`:
 
 ```javascript
-// Ganti dengan IP address komputer Anda
+// Ganti dengan IP address komputer Anda (Misal kek di contoh saya adalah 192.168.1.5)
 const API_BASE_URL = 'http://192.168.1.100:3000/api';
 ```
 
