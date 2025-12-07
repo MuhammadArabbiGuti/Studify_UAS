@@ -17,7 +17,7 @@ export default function AdminHomeScreen() {
           <Ionicons name="add-outline" size={32} color="#0B173B" />
           <Text style={styles.cardText}>Lihat daftar / tambah Dosen</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.card} onPress={() => router.push("/(admin)/AddClass")}>
+        <TouchableOpacity style={styles.card} onPress={() => router.push("/(admin)/(kelas)/kelas")}>
           <Ionicons name="add-outline" size={32} color="#0B173B" />
           <Text style={styles.cardText}>Lihat daftar / tambah Kelas</Text>
         </TouchableOpacity>

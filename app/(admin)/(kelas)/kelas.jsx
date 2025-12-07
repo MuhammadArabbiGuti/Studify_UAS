@@ -20,7 +20,7 @@ export default function KelasAdmin() {
           style={{ padding: 18, backgroundColor: "#fff", marginBottom: 10, borderRadius: 12 }}
         >
           <Text style={{ fontSize: 18, fontWeight: "700", color:"#000" }}>{kelas.title}</Text>
-          <Text style={{ color: "#777" }}>{kelas.siswa.length} mahasiswa</Text>
+          <Text style={{ color: "#777" }}>{Array.isArray(kelas.siswa) ? kelas.siswa.length : 0} mahasiswa</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>
